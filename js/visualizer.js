@@ -72,7 +72,7 @@ var changeLegend = function () {
             ynElem += "<td class='option opt" + j + "'>" + node.state[j] + "</td>";
         }
         var tr = "<tr class='state st"+ node.id + "'><td>" + node.ordered + "</td><td>" + node.decimal + "</td>" + ynElem + "</tr>";
-        $(tr).appendTo("div#menu-right table");
+        $(tr).appendTo("div#menu-right table").data("state",node);
     }
     
     var tableWidth = $("div#menu-right table").width();
@@ -100,7 +100,9 @@ var changeLegend = function () {
         d3.selectAll("." + this.classList[1])
             .style("fill", "lightBlue");
     }).click(function(){
-    
+        if (visualization.name == "Tree") {
+            visualization.changeRoot($(this).data("state"));
+        }
     })
     
     

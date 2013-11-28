@@ -87,10 +87,9 @@
         treeVis.vis = container;
         tree.size([container.style("width").slice(0, -2), container.style("height").slice(0, -2) - 80]);
         changeRoot(conflict.data.nodes[0]);
-        
-        
-        
     };
+    
+    treeVis.changeRoot = changeRoot;
 
 
 }(window.treeVis = window.treeVis || {}, jQuery));
