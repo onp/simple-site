@@ -1,0 +1,130 @@
+body{
+    height:100%
+}
+
+/* Side Menus */
+
+div#menu-left{
+    width:200px;
+    height:100%;
+    position:fixed;
+    top:0px;
+    left:-180px;
+    background:lightBlue;
+}
+
+div#menu-left:hover{
+    left:0px;
+}
+
+div#menu-right{
+    width:200px;
+    height:100%;
+    top:0px;
+    position:fixed;
+    right:-180px;
+    background:lightBlue;
+}
+
+div#menu-right:hover{
+    right:0px;
+}
+
+p.menu-title{
+    margin:0px;
+    width:100%;
+    text-align:center;
+}
+
+p.menu-subtitle{
+    margin:25px 0px 0px 5px;
+}
+
+ul.item-selector{
+    list-style:none;
+    margin:10px 0px;
+    padding:0px 20px;
+}
+
+ul.item-selector li:hover{
+    background:lightSeaGreen;
+}
+
+ul.item-selector li.selected{
+    background:lightSeaGreen;
+}
+
+div#menu-right table{
+    margin:20px 20px 0px 20px;
+}
+
+div#menu-right table th{
+    vertical-align:bottom;
+    
+    border:1px solid black;
+}
+
+div#menu-right table th div{
+    width: 20px;
+    margin: 0px auto;
+    padding: 0px;
+    white-space: nowrap;
+    -webkit-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg); 
+}
+
+div#menu-right table td{
+    text-align:center;
+    border:1px solid black;
+}
+
+/* Main content */
+div#main{
+    margin:0px 20px;
+    height:100%;
+}
+
+h1#page-title{
+    width:400px;
+    text-align:center;
+    margin:0px auto;
+}
+
+svg#visualization-container{
+    width:100%
+}
+
+
+.link{
+	stroke:#000;
+	stroke-width: 1.5px;
+    fill:none;
+}
+
+.node{
+	fill:lightBlue;
+	stroke:black;
+	stroke-width: 1.5px;
+}
+
+.label{
+	pointer-events:none;
+	font-size:10px;
+	text-anchor:middle;
+}
+
+.link.dm0{
+	stroke:blue;
+}
+.link.dm1{
+	stroke:green;
+}
+.link.dm2{
+	stroke:orange;
+}
+.link.dm3{
+	stroke:purple;
+}
+.link.dm4{
+	stroke:yellow;
+}
