@@ -2,6 +2,7 @@ div.content{
 	width:900px;
 	margin-left:auto;
 	margin-right:auto;
+    padding-top:8px;
 }
 
 div.topbar{
@@ -24,4 +25,8 @@ div.address p{
 
 div.topbar span{
 	font-size:60px;
+}
+
+ul{
+    margin-top:4px;
 }
