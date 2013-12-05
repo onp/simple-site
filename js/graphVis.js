@@ -39,7 +39,7 @@
             .append("text")
             .attr("class", "label")
             .attr("dy",3)
-            .text(function(d){return d.id});
+            .text(function(d){return d.dat.ordered});
         label.exit().remove();
         
         d3.selectAll("div.state")
@@ -91,7 +91,11 @@
         if (selfCalled === undefined){
             graphVis.loadVis(conflict, container, true);    //I have no idea why this is necessary.
         }
-    }
+    };
+    
+    graphVis.visConfig = function(){
+        return $("<div></div>")
+    };
     
     var nodes = [],
         links = [];
