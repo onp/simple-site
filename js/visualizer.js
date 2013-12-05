@@ -3,7 +3,8 @@
 var conflicts = [
 	{"name":"Prisoners","url":"json/PrisonersVis.json"},
 	{"name":"Garrison","url":"json/GarrisonVis.json"},
-	{"name":"SyriaIraq","url":"json/SyriaIraqVis.json"}
+	{"name":"SyriaIraq","url":"json/SyriaIraqVis.json"},
+	{"name":"Elmira","url":"json/Elmira.json"}
 ];
 
 var visualizations = [treeVis,graphVis];
