@@ -1,13 +1,13 @@
 'use strict';
 
 var conflicts = [
-	{"name":"Prisoners","url":"json/PrisonersVis.json"},
-	{"name":"Garrison","url":"json/GarrisonVis.json"},
-	{"name":"SyriaIraq","url":"json/SyriaIraqVis.json"},
-	{"name":"Elmira","url":"json/Elmira.json"}
+	{"name" : "Prisoners", "url" : "json/PrisonersVis.json"},
+	{"name" : "Garrison", "url" : "json/GarrisonVis.json"},
+	{"name" : "SyriaIraq", "url" : "json/SyriaIraqVis.json"},
+	{"name" : "Elmira", "url" : "json/Elmira.json"}
 ];
 
-var visualizations = [treeVis,graphVis];
+var visualizations = [treeVis, graphVis];
 
 var visualization = visualizations[0];
 var conflict = conflicts[0];
@@ -16,16 +16,16 @@ var loadConflict = function () {
     if (conflict.data === undefined) {
         $.getJSON(conflict.url, function (data) {
             //this conflict unpacker is still quite incomplete.  Currently only deals with reachability.
-            for(var i = 0; i < data.nodes.length; i++){
+            for (var i = 0; i < data.nodes.length; i++){
                 var node = data.nodes[i];
                 node.reachable = $.map(node.reachable,
                         function (link) {
                             link.source = node;
                             link.target = data.nodes[link.target];
-                            return(link)
+                            return(link);
                         }
                 )
-            };
+            }
             conflict.data = data;
             visualization.loadVis(conflict,d3.select("svg#visualization-container"));
             changeLegend();
@@ -37,77 +37,95 @@ var loadConflict = function () {
     }
 };
 
+var tElemMaker = function(val,elem, rows, classes){
+    if (elem === undefined){
+        elem = "td";
+    }
+    var elemText = "<" + elem
+    if (rows !== undefined){
+        elemText += " rowspan=" + rows
+    }
+    if (classes !== undefined){
+        elemText += " class='"+ classes.join(' ') + "'"
+    }
+    elemText+= ">" + val + "</" + elem + ">"
+    return elemText;
+}
+
 var changeLegend = function () {
-    $("div#menu-right table").html("");
+    $("div#menu-bottom table").html("");
     
-    var th1 = "<th></th><th></th>";
+    var legendData = [[],[]];
     
-    for (var i = 0; i <conflict.data.decisionMakers.length; i++){
-        var dm = conflict.data.decisionMakers[i]
-        th1 += "<th colspan='"+ dm.options.length +"'>" + dm.name + "</th>"
-    }
-    th1 = "<tr>" + th1 + "</tr>";
-    $(th1).appendTo("div#menu-right table");
-    
-    var th2 = "<th><div>Ordered</div></th><th><div>Decimal</div></th>";
-    for (var i=0; i < conflict.data.options.length; i++){
-        th2 += "<th class='option opt" + i + "'><div>" + conflict.data.options[i].name + "</div></th>";
-    };
-    th2 = "<tr>" + th2 + "</tr>";
-    $(th2).appendTo("div#menu-right table");
-    
-    var headerHeight = 0;
-    $("div#menu-right table th div").each(function () {
-        $(this).css("display","inline");
-        if ($(this).outerWidth() > headerHeight){
-            headerHeight = $(this).outerWidth();
-        };
-        $(this).css("display","block");
-    });
-    $("div#menu-right table th div").parent().height(headerHeight);
-    
-    for (var i =0; i < conflict.data.nodes.length; i++){
-        var node = conflict.data.nodes[i]
-        var ynElem = "";
-        for (var j =0; j<node.state.length; j++){
-            ynElem += "<td class='option opt" + j + "'>" + node.state[j] + "</td>";
-        }
-        var tr = "<tr class='state st"+ node.id + "'><td>" + node.ordered + "</td><td>" + node.decimal + "</td>" + ynElem + "</tr>";
-        $(tr).appendTo("div#menu-right table").data("state",node);
+    for (var i = 2; i<conflict.data.options.length+2; i++){
+        legendData[i] = [];
     }
     
-    var tableWidth = $("div#menu-right table").width();
-    $("div#menu-right").width(tableWidth+40)
-    var styleSheet = document.styleSheets[1];  //this is easily breakable.
-    for (var i = 0; i<styleSheet.cssRules.length; i++){
-        var rule = styleSheet.cssRules[i];
-        if (rule.selectorText == "div#menu-right"){
-            rule.style.right = String(-20-tableWidth) + "px";
+    
+    legendData[0][0] = tElemMaker("", "th");
+    legendData[1][0] = tElemMaker("", "th");
+    legendData[0][1] = tElemMaker("Ordered", "th");
+    legendData[1][1] = tElemMaker("Decimal", "th");
+    
+    var row = 2;
+    for (var i = 0; i < conflict.data.decisionMakers.length; i++){
+        var dm = conflict.data.decisionMakers[i];
+        legendData[i+row][0] = tElemMaker(dm.name, "th", dm.options.length);
+        row += dm.options.length -1;
+    }
+    
+    for (var i = 0; i < conflict.data.options.length; i++){
+        legendData[i+2][1] = tElemMaker(conflict.data.options[i].name,undefined,undefined,["option","opt"+i]);
+    }
+    
+    for (var j = 0; j < conflict.data.nodes.length; j++){
+        var node = conflict.data.nodes[j];
+        legendData[0][j+2] = tElemMaker(node.ordered,undefined,undefined,["state","st"+node.id]);
+        legendData[1][j+2] = tElemMaker(node.decimal,undefined,undefined,["state","st"+node.id]);
+        for (var i = 0; i<node.state.length; i++){
+            legendData[i+2][j+2] =tElemMaker(node.state[i],undefined,undefined,["option","opt"+i,"state","st"+node.id]);
         }
     }
+    
+    console.log(legendData);
+    
+    var tString = ""
+    
+    for (var i = 0; i<legendData.length; i++){
+        tString += "<tr>";
+        for (var j = 0; j<legendData[i].length; j++){
+            var elem = legendData[i][j];
+            tString += elem
+        }
+    }
+    
+    $(tString).appendTo("div#menu-bottom table")
     
     $(".option").mouseover(function () {
-        $("."+this.classList[1]).css("background-color","paleVioletRed");
+        $("."+this.className.match(/opt\d+/)).css("background-color","paleVioletRed");
     }).mouseout(function (){
-        $("."+this.classList[1]).css("background-color","transparent");
-    })
+        $("."+this.className.match(/opt\d+/)).css("background-color","transparent");
+    });
     
     $(".state").mouseover(function () {
-        $("."+this.classList[1]).css("background-color","paleVioletRed")
-        d3.selectAll("." + this.classList[1])
+        var clsName = this.className.match(/st\d+/)
+        $("."+clsName).css("background-color","paleVioletRed");
+        d3.selectAll("." + clsName)
             .style("fill", "paleVioletRed");
     }).mouseout(function (){
-        $("."+this.classList[1]).css("background-color","transparent")
-        d3.selectAll("." + this.classList[1])
+        var clsName = this.className.match(/st\d+/)
+        $("."+clsName).css("background-color","transparent");
+        d3.selectAll("." + clsName)
             .style("fill", "lightBlue");
     }).click(function(){
         if (visualization.name == "Tree") {
-            visualization.changeRoot($(this).data("state"));
+            var stateNum = this.className.match(/st(\d+)/)[1]
+            visualization.changeRoot(conflict.data.nodes[stateNum]);
         }
-    })
+    });
     
     
-}
+};
 
 
 $(function () {
@@ -118,10 +136,10 @@ $(function () {
                 conflict = conf;
                 if (loadConflict()){
                     changeLegend();
-                };
+                }
                 $(this).siblings().removeClass('selected');
                 $(this).addClass('selected');
-            }).appendTo("ul#conflict-list")
+            }).appendTo("ul#conflict-list");
     });
     
     $.each(visualizations, function (i, vis) {
@@ -129,9 +147,10 @@ $(function () {
             .click(function () {
                 visualization = vis;
                 loadConflict(conflict);
+                vis.visConfig();
                 $(this).siblings().removeClass('selected');
                 $(this).addClass('selected');
-            }).appendTo("ul#visualization-list")
+            }).appendTo("ul#visualization-list");
     });
     
     $( window ).resize(function() {
@@ -140,4 +159,4 @@ $(function () {
     
     $("ul#conflict-list li").first().click();
     $("ul#visualization-list li").first().click();
-})
+});
