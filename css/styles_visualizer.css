@@ -11,6 +11,7 @@ div#menu-left{
     top:0px;
     left:-180px;
     background:lightBlue;
+    border-right:1px solid black;
 }
 
 div#menu-left:hover{
@@ -24,10 +25,12 @@ div#menu-bottom{
     left:0px;
     position:fixed;
     background:lightBlue;
+    border-top:1px solid black;
 }
 
 div#menu-bottom:hover{
     bottom:0px;
+    opacity:0.7;
 }
 
 p.menu-title{
@@ -69,22 +72,12 @@ ul.item-selector li.selected{
 }
 
 div#menu-bottom table{
-    margin:20px 20px 0px 20px;
+    margin:20px auto;
 }
 
 div#menu-bottom table th{
-    vertical-align:bottom;
-    
+    vertical-align:center;
     border:1px solid black;
-}
-
-div#menu-bottom table th div{
-    width: 20px;
-    margin: 0px auto;
-    padding: 0px;
-    white-space: nowrap;
-    -webkit-transform: rotate(-90deg); 
-    -moz-transform: rotate(-90deg); 
 }
 
 div#menu-bottom table td{

@@ -36,7 +36,6 @@
 
 		var nodes = tree.nodes(root),	//insert structure into d3 tree, store in nodes
 			links = tree.links(nodes);  //store calculated link data in links
-            console.log(links)
 
         var node = treeVis.vis.selectAll(".node"),	//establish d3 selection variables
             link = treeVis.vis.selectAll(".link"),
@@ -115,19 +114,19 @@
         config.find("#treeDepth")
             .val(treeVis.treeDepth)
             .change(function(){
-                treeVis.treeDepth = $(this).val()
+                treeVis.treeDepth = $(this).val();
                 changeRoot(conflict.data.nodes[0]);
-            })
+            });
         config.find("#ui")
             .prop("checked", treeVis.showOnlyUIs)
             .change(function(){
-                treeVis.showOnlyUIs = $(this).prop("checked")
+                treeVis.showOnlyUIs = $(this).prop("checked");
                 changeRoot(conflict.data.nodes[0]);
-            })
+            });
         
-        $("ul#vis-config").html('').append(config)
+        $("ul#vis-config").html('').append(config);
     
-    }
+    };
 
 
 }(window.treeVis = window.treeVis || {}, jQuery));

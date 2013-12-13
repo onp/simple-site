@@ -24,7 +24,7 @@ var loadConflict = function () {
                             link.target = data.nodes[link.target];
                             return(link);
                         }
-                )
+                );
             }
             conflict.data = data;
             visualization.loadVis(conflict,d3.select("svg#visualization-container"));
@@ -41,16 +41,16 @@ var tElemMaker = function(val,elem, rows, classes){
     if (elem === undefined){
         elem = "td";
     }
-    var elemText = "<" + elem
+    var elemText = "<" + elem;
     if (rows !== undefined){
-        elemText += " rowspan=" + rows
+        elemText += " rowspan=" + rows;
     }
     if (classes !== undefined){
-        elemText += " class='"+ classes.join(' ') + "'"
+        elemText += " class='"+ classes.join(' ') + "'";
     }
-    elemText+= ">" + val + "</" + elem + ">"
+    elemText+= ">" + val + "</" + elem + ">";
     return elemText;
-}
+};
 
 var changeLegend = function () {
     $("div#menu-bottom table").html("");
@@ -87,19 +87,29 @@ var changeLegend = function () {
         }
     }
     
-    console.log(legendData);
-    
-    var tString = ""
+    var tString = "";
     
     for (var i = 0; i<legendData.length; i++){
         tString += "<tr>";
         for (var j = 0; j<legendData[i].length; j++){
             var elem = legendData[i][j];
-            tString += elem
+            tString += elem;
         }
     }
     
-    $(tString).appendTo("div#menu-bottom table")
+    $(tString).appendTo("div#menu-bottom table");
+    
+    var tableHeight = $("div#menu-bottom table").height();
+    $("div#menu-bottom").height(tableHeight+60);
+    var styleSheet = document.styleSheets[1];  //this is easily breakable.
+    for (var i = 0; i<styleSheet.cssRules.length; i++){
+        var rule = styleSheet.cssRules[i];
+        if (rule.selectorText == "div#menu-bottom"){
+            rule.style.bottom = String(-40-tableHeight) + "px";
+            break;
+        }
+    }
+    
     
     $(".option").mouseover(function () {
         $("."+this.className.match(/opt\d+/)).css("background-color","paleVioletRed");
@@ -108,18 +118,18 @@ var changeLegend = function () {
     });
     
     $(".state").mouseover(function () {
-        var clsName = this.className.match(/st\d+/)
+        var clsName = this.className.match(/st\d+/);
         $("."+clsName).css("background-color","paleVioletRed");
         d3.selectAll("." + clsName)
             .style("fill", "paleVioletRed");
     }).mouseout(function (){
-        var clsName = this.className.match(/st\d+/)
+        var clsName = this.className.match(/st\d+/);
         $("."+clsName).css("background-color","transparent");
         d3.selectAll("." + clsName)
             .style("fill", "lightBlue");
     }).click(function(){
         if (visualization.name == "Tree") {
-            var stateNum = this.className.match(/st(\d+)/)[1]
+            var stateNum = this.className.match(/st(\d+)/)[1];
             visualization.changeRoot(conflict.data.nodes[stateNum]);
         }
     });
