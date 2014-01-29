@@ -26,9 +26,13 @@ div.linkBox{
     margin:20px;
 }
 
+div.linkBox:hover{
+    background-color:lightGreen;
+}
+
 a{
     display:block;
     width:100%;
-    height:100%;
+    padding:60px 0px;
 	text-align:center;
 }

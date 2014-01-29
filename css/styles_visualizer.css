@@ -82,6 +82,7 @@ div#menu-bottom table th{
 
 div#menu-bottom table td{
     text-align:center;
+    padding:3px 5px;
     border:1px solid black;
 }
 
