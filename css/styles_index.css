@@ -1,7 +1,9 @@
 div.content{
-	width:900px;
+	width:100%;
+    max-width:900px;
 	margin-left:auto;
 	margin-right:auto;
+    background:linear-gradient(to bottom, lightGreen, white)
 }
 
 h1{
@@ -21,18 +23,41 @@ p{
 
 div.linkBox{
     float:left;
+    position:relative;
     height:150px;
     width:260px;
-    margin:20px;
+    margin:18px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    border:1px solid black;
+    padding:1px;
 }
 
 div.linkBox:hover{
-    background-color:lightGreen;
+    border:2px solid black;
+    padding:0px;
+}
+
+div#resume{
+    background-image:url(/images/resume.png);
+}
+
+div#conflict-editor{
+    background-image:url(/images/conflict-editor.png);
+}
+
+div#visualizer{
+    background-image:url(/images/visualizer.png);
 }
 
 a{
+    position:absolute;
+    left:0px;
     display:block;
     width:100%;
-    padding:60px 0px;
+    bottom:0px;
+    padding:5px 0px;
 	text-align:center;
+    font-weight:bold;
+    background-color:rgba(120,120,120,0.6);
 }
