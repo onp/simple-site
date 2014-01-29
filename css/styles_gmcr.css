@@ -1,5 +1,6 @@
 div.container{
-	width:1200px;
+	min-width:600px;
+    max-width:1200px;
 	position:relative;
 	margin:0 auto;
 }
@@ -11,7 +12,7 @@ div{margin:0;padding:0}
 
 div.topbar{
 	position:relative;
-	width:101%;
+	width:100%;
 	height:95px;
 	right:5px;
 	border-bottom:2px solid gray;
@@ -64,16 +65,16 @@ div.sidebar li p{
 
 div.mainContent{
 	position:absolute;
-	left: 13%;
+	left: 160px;
 	top:100px;
+    right:5px;
 	background-color:darkTurquoise;
 	min-height:500px;
-	width:87%;
 }
 
 div.dmList{
 	position:relative;
-	width:45%;
+    width:325px;
 	padding:10px;
 }
 
@@ -106,7 +107,7 @@ li.addDM:hover {
 form.dmForm input.dmName{
 	position:relative;
 	margin:5px;
-	width:45%;
+	width:80%;
 	font-size:20px;
 	color:red;
 	padding:8px 4px;
